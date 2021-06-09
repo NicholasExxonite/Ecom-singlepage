@@ -1,0 +1,59 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+}
+header{
+  /* ..need background image */
+  background-color: lightgray;
+  position: relative;
+  height: 150px;
+}
+
+.overlay{
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  right: 0;
+  bottom: 0;
+}
+
+nav{
+  padding-top: 65px;
+  padding-left: 100px;
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+}
+.navul{
+  top: 0;
+  right: 0;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+.navul *{
+  margin-right: 20px
+}
+
+.shoppinglist{
+  padding-top: 50px;
+  display: flex;
+  flex-direction: row;
+}
+
+.shoppinglist *{
+  padding-left: 20px;
+}
+
+.addtocart:hover{
+  background-color: lightgray;
+}
