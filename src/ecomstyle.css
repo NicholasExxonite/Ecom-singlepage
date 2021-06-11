@@ -6,12 +6,17 @@
 }
 header{
   /* ..need background image */
-  background-color: lightgray;
+  background-image: url("images/banner1.jpg");
+  background-size: 100% 100%;
+  background-size: cover;
+  /* background-color: lightgray; */
   position: relative;
   height: 150px;
+  width: 100%;
 }
 
 .overlay{
+  width: 100%;
   z-index: 1;
   position: absolute;
   top: 0;
@@ -19,11 +24,28 @@ header{
   height: 100%;
   right: 0;
   bottom: 0;
+
 }
+.shoppinglist{
+  padding-top: 50px;
+  align-items: flex-start;
+  display: flex;
+  flex-direction: row;
+}
+
+.shoppinglist *{
+  margin-right: 10px;
+}
+
+.addtocart:hover{
+  background-color: lightgray;
+}
+
 
 nav{
   padding-top: 65px;
-  padding-left: 100px;
+  padding-left: 20px;
+  padding-right: 20px;
   position: absolute;
   z-index: 2;
   top: 0;
@@ -38,22 +60,103 @@ nav{
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
 }
 
 .navul *{
-  margin-right: 20px
 }
 
-.shoppinglist{
-  padding-top: 50px;
+.cart:hover{
+  opacity: 0.6;
+}
+.cartNumber{
+  color: white;
+  align-self: center;
+  justify-content: center;
+}
+.productButtons{
+  display: flex;
+  justify-content: space-between;
+}
+
+.singleproduct{
+  flex: 1;
+}
+
+.fa-shopping-cart{
+  color: white;
+}
+
+.remove{
+
+}
+
+
+
+/* CART CSS --------------------------------------------- */
+
+.cartInfo{
+  /* background-color: lightgray; */
+  height: auto;
+  width: 100%;
+  display: none;
+  margin: 0 auto;
+
+}
+.cart-header{
+  margin-top: 20px;
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  border-bottom: 2px solid lightgray;
 }
 
-.shoppinglist *{
-  padding-left: 20px;
+.item-title{
+  width:45%;
+}
+.item-price{
+  width: 15%;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+}
+.item-quantity{
+  width:30%;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+.item-total{
+  justify-content: center;
+  width:10%;
+  display:flex;
+  align-items: center;
 }
 
-.addtocart:hover{
-  background-color: lightgray;
+
+.cart-header *{
+
+}
+.products{
+  align-self: flex-start;
+  justify-content: flex-start;
+}
+
+.productItem{
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border-bottom: 2px solid lightgray;
+}
+
+.basket-total-container{
+  display: flex;
+}
+
+.basket-total-title{
+  margin-right: 10px;
 }
