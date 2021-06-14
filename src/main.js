@@ -1,159 +1,193 @@
 'use strict';
 
-// function counter() {
-//   let seconds = 0;
-//   setInterval(() => {
-//     seconds += 1;
-//     document.getElementById('app').innerHTML = `<p>You have been here for ${seconds} seconds.</p>`;
-//   }, 1000);
-// }
-//
-// counter();
-
-
-// List of items
-var items = [
+// Declearing list of product items to be used.
+let items = [
   {
     itemName: 'Watch One',
-    description: 'Description for item One',
+    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
     price: 10,
     numInCart: 0,
     imgurl: "images/watch1.jpg"
   },
   {
     itemName: 'Watch Two',
-    description: 'Description for item Two',
+    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
     price: 15,
     numInCart: 0,
     imgurl: "images/watch2.jpg",
   },
   {
     itemName: 'Watch Three',
-    description: 'Description for item Three',
+    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
     price: 20,
     numInCart: 0,
     imgurl: "images/watch3.jpg"
   },
   {
     itemName: 'Watch Four',
-    description: 'Description for item Four',
+    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
     price: 25,
     numInCart: 0,
     imgurl: "images/watch4.jpg"
   },
   {
     itemName: 'Watch Five',
-    description: 'Description for item Five',
+    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
     price: 30,
     numInCart: 0,
     imgurl: "images/watch5.jpg"
   }
 ]
 
-    // <a class="remove cart${i}" href=#> Remove from cart</a>
+//Displaying each item from our list on the page by appending it to .shoppinglist
+function displayShoppingItems(){
+  items.forEach((item, i) => {
+    $(".shoppinglist").append(
+      `
+      <div class="singleproduct">
 
-// <a class="addtocart cart${i}">
-//
-// </a>
-//Display shopping products
+        <div class="productInfo">
+          <div class="productHead">
+            <p>${item.itemName}</p>
+            <img class="productImage" src="images/watch${i+1}.jpg" >
+          </div>
+
+          <div class="itemDescription">${item.description}</div>
+          <div>$${item.price},00</div>
+        </div>
 
 
-items.forEach((item, i) => {
-  $(".shoppinglist").append(
-    `
-    <div class="singleproduct">
-      <p>${item.itemName}</p>
-      <img src="images/watch${i+1}.jpg" style="width:100%; height:200px;">
+        <div class= "productButtons">
+          <i class="addtocart cart${i} fas fa-plus-circle"></i>
+          <i class="remove cart${i} fas fa-trash-alt"></i>
+        </div>
 
-      <p>${item.description}</p>
-      <p>$${item.price}</p>
-
-      <div class= "productButtons">
-        <i class="addtocart cart${i} fas fa-plus-circle"></i>
-        <i class="remove cart${i} fas fa-trash-alt"></i>
       </div>
-    </div>
-    `
-  );
-  $(".remove.cart"+i).hide();
-  // checkRemoveButton(item, i);
-});
+      `
+    );
+    productButtons(item, i)
+    // if(localStorage.getItem('cartProducts')[item.itemName].numInCart)
+  });
+}
+displayShoppingItems(items);
 
 
-$('.cart').click(function(){
-  $('.cartInfo').toggle(1000);
-})
+//function to toggle the add and remove from cart buttons from products.
+function productButtons(item, i){
+  let items = localStorage.getItem("cartProducts");
+  items = JSON.parse(items);
 
-// function checkRemoveButton(item, i){
-//   let cartItems = localStorage.getItem('cartProducts');
-//   cartItems = JSON.parse(cartItems);
-//   let target = $(".remove.cart"+i);
-//
-//   if(cartItems[item.itemName] == undefined){
-//     target.hide();
-//     // console.log("not in cart.." + i);
-//
-//   }else {
-//     target.show();
-//     console.log(cartItems[item.itemName]);
-//     console.log(cartItems[item.itemName].numInCart + " : "+  i);
-//   }
-//
-// }
+  if(items[item.itemName] === undefined){
+    $(".remove.cart"+i).hide();
+  }
+  else {
+    $(".remove.cart"+i).show();
+  }
+}
 
-// $(document).ready(function(){
-//   let cartItems = localStorage.getItem('cartProducts');
-//   cartItems = JSON.parse(cartItems);
-//
-//   items.forEach((item, i) => {
-//     var target =$(".remove.cart"+i);
-//
-//     if (cartItems[item.itemName] == undefined) {
-//       console.log("not in cart");
-//       target.hide();
-//     }else {
-//       console.log(cartItems[item.itemName].itemName+" in cart!");
-//       target.show();
-//     }
-//   });
-
-
-  // console.log(cartItems);
-  // Object.values(cartItems).map((item, i) => {
-  //   let target = $(".remove.cart"+i);
-  //
-  //   console.log(item);
-  // })
-
-// })
-
-
-
-let carts = document.querySelectorAll('.addtocart');
-
-for(let i =0; i< carts.length; i++){
-  carts[i].addEventListener('click', ()=>{
-    console.log("added to cart");
-
-    var target = $(".remove.cart"+i);
-    target.show();
-    
-    totalCost(items[i]);
-    cartNumbers(items[i]);
-
+//Function to toggle between showing and hiding basket.
+function toggleBasket(){
+  $('.cart').click(function(){
+    $('.cartInfo').toggle(1000);
   })
 }
 
+
+//Function that checks if basket is in right condition
+// If yes, POST basket data.
+function commence_payment(){
+  $('#checkout-button').click(function(){
+    let totalcost = localStorage.getItem('totalCost');
+    let cartNumb = localStorage.getItem('cartNumbers');
+    let cartItems = localStorage.getItem('cartProducts');
+    cartItems = JSON.parse(cartItems);
+    cartNumb = JSON.parse(cartNumb);
+
+
+    let should_post = true;
+
+  //The list that will contain the data sent via POST
+    let to_send = [];
+
+    // Check if basket is empty
+    if(cartNumb == 0){
+      alert('Your shopping cart is empty');
+    //if not empty..
+    }else {
+      Object.values(cartItems).map((item) =>{
+
+
+        to_send.push([{
+          name : item.itemName,
+          price : item.price,
+          quantity : item.numInCart
+        }])
+
+
+      // if any of the basket items have quantity over 5, should_post becomes false.
+        if(item.numInCart > 5){
+          alert('The selected quatity of product ' + item.itemName + " is out of stock.");
+          should_post = false;
+          // console.log(should_post);
+          return;
+        }
+      })
+
+      //If basket is not empty and no item is over 5 quantity.
+      if(should_post){
+
+        alert('Payment..');
+        //add total cost to the array that will be sent via ajax
+        to_send.push([{
+          totalCost: localStorage.getItem('totalCost')
+        }])
+
+        // POSTing to my-json-servers for a sample response
+        $.ajax("https://my-json-server.typicode.com/typicode/demo/posts", {
+          dataType: "json",
+          data:{
+            products: to_send,
+          },
+          type: "POST",
+          success: function(data, status){
+            console.log(status);
+            // console.log(data);
+          }
+        })
+      }
+    }
+  })
+}
+
+//Function that adds an item to the cart and toggles the remove from cart button.
+function addToCart(){
+  let carts = document.querySelectorAll('.addtocart');
+
+  for(let i =0; i< carts.length; i++){
+    carts[i].addEventListener('click', ()=>{
+      // console.log("added to cart");
+
+      let target = $(".remove.cart"+i);
+      target.show();
+
+      totalCost(items[i]);
+      cartNumbers(items[i]);
+
+    })
+  }
+}
+
+//Function called when an item is being removed from the cart.
 function removeFromCart(){
   let removecart = document.querySelectorAll('.remove');
 
   for(let i=0; i<removecart.length; i++){
     removecart[i].addEventListener('click', ()=>{
-      console.log("removed from cart: " + items[i].itemName);
+      // console.log("removed from cart: " + items[i].itemName);
 
       let cartItems = localStorage.getItem('cartProducts');
       cartItems = JSON.parse(cartItems);
-      console.log(cartItems);
+      // console.log(cartItems);
 
       //check if it exists using name
       if(cartItems.hasOwnProperty(items[i].itemName)){
@@ -167,8 +201,6 @@ function removeFromCart(){
 
         //If it's more than 1, reduce quantity
         if(cartItems[items[i].itemName].numInCart > 1 ){
-          console.log(cartItems[items[i].itemName].numInCart);
-          console.log("more than 1");
 
           //decrease quantity with 1
           cartItems[items[i].itemName].numInCart -= 1;
@@ -178,24 +210,23 @@ function removeFromCart(){
           localStorage.setItem("cartProducts", JSON.stringify(cartItems));
 
           //set new total total
-          console.log("previous totalcost: "+ totalcost);
+          // console.log("previous totalcost: "+ totalcost);
           localStorage.setItem("totalCost", totalcost - items[i].price)
 
           //set new number of items in cart
           localStorage.setItem('cartNumbers', productNumb - 1);
           document.querySelector('.cart span').textContent = productNumb - 1;
 
-          console.log("new totalcost: " + parseInt(localStorage.getItem('totalCost')));
+          // console.log("new totalcost: " + parseInt(localStorage.getItem('totalCost')));
 
         // If quantity is 1, remove item from cart.
         }else {
-          console.log("less than 1 in cart, delete whole item");
-
+          //hide the remove from cart button
           var target = $(".remove.cart"+i);
           target.hide();
-          // console.log(cartItems[items[i].numInCart]);
 
-          console.log(cartItems[items[i].itemName].numInCart);
+
+          // console.log(cartItems[items[i].itemName].numInCart);
 
           //0 of this item are in the cart after removing
           cartItems[items[i].itemName].numInCart = 0;
@@ -208,7 +239,6 @@ function removeFromCart(){
           localStorage.setItem("cartProducts", JSON.stringify(cartItems));
 
           //set new total total
-          console.log("previous totalcost: "+ totalcost);
           localStorage.setItem("totalCost", totalcost - items[i].price)
 
           //set new number of items in cart
@@ -218,16 +248,12 @@ function removeFromCart(){
         }
         //update cart
         getCart();
-
       }
-
-
-      // console.log(typeof items[i]);
     });
   }
 }
 
-
+//Function that loads cart numbers from local storage.
 function loadCartNumbs(){
   let productNumb = localStorage.getItem('cartNumbers');
 
@@ -236,10 +262,8 @@ function loadCartNumbs(){
 
 
 
-
+//function that updates the cart quantity
 function cartNumbers(item){
-
-  // console.log(item);
 
   let productNumb = localStorage.getItem('cartNumbers');
 
@@ -256,18 +280,18 @@ function cartNumbers(item){
   setCartItems(item);
 }
 
+// Function that updates the products in the cart when adding a new product.
 function setCartItems(item){
   let cartItems = localStorage.getItem('cartProducts');
   cartItems = JSON.parse(cartItems);
 
+//If no items in cart, set cartItems as the product just added.
   if(cartItems == null){
     item.numInCart = 1;
-    // cartItems[item.itemName].numInCart = 1;
     cartItems = {
       [item.itemName] : item
     }
   }else {
-
     // get the previous items from local storage and all others
     if(cartItems[item.itemName] == undefined){
       cartItems = {
@@ -278,12 +302,14 @@ function setCartItems(item){
     cartItems[item.itemName].numInCart += 1;
   }
 
+//set new products in cart.
   localStorage.setItem("cartProducts", JSON.stringify(cartItems));
 
   //update cart
   getCart();
 }
 
+//function to update total cost
 function totalCost(item){
   let totalCartCost = localStorage.getItem('totalCost');
   console.log("added item: "+ item.itemName + " with cost of: " + item.price);
@@ -301,52 +327,74 @@ function totalCost(item){
   console.log("total cost now is: " + localStorage.getItem("totalCost"));
 }
 
-
+//Function to get and display the current basket/cart.
 function getCart(){
   let items = localStorage.getItem("cartProducts");
   items = JSON.parse(items);
 
   let container = document.querySelector(".products");
 
+  // let baskettotal = document.querySelector(".basket-total");
+
   let totalCartCost = localStorage.getItem('totalCost');
   totalCartCost = JSON.parse(totalCartCost);
+  displayCheckout();
   // run only if items and .cart-container is running.
   if (items && container) {
     container.innerHTML = '';
 
     // check the values of the cart items
     Object.values(items).map((item) => {
+      //display each basket item.
       container.innerHTML += `
       <div class=productItem>
         <div class="item-title">
           <div>${item.itemName}</div>
           <img src="${item.imgurl}" style="width:60px; height:60px;">
         </div>
-        <div class="item-price">${item.price}</div>
+        <div class="item-price">$${item.price},00</div>
         <div class="item-quantity">${item.numInCart}</div>
         <div class="item-total">$${item.price * item.numInCart},00</div>
       </div>
       `
     });
-
-    container.innerHTML += `
-    <div class="basket-total-container">
-      <h4 class="basket-total-title">
-        Basket Total
-      </h4>
-      <h4 class="basket-total-amount">
-      $${totalCartCost},00
-      </h4>
-    `
   }
+}
 
+//function for animated text looping from right to left.
+function loopText(){
+  $(document).ready(function(){
+    function loop(){
+      $('#text-loop').css({right:0});
+      $('#text-loop').animate({
+        right: screen.width,
+      }, 10000, 'linear', function(){
+        loop();
+      });
+    }
+    loop();
 
-  // console.log(items);
+  })
+}
+
+//function that displays the checkout quantity and amount
+function displayCheckout(){
+
+  let productNumb = localStorage.getItem('cartNumbers');
+  let totalCartCost = localStorage.getItem('totalCost');
+
+  $('.basket-total-cost').html("Basket Total ("+ productNumb +" items): $"+totalCartCost + ",00");
+
 }
 
 
 // run when page loads.
 // checkRemove();
+addToCart();
+toggleBasket();
+commence_payment();
+loopText();
+displayCheckout();
 getCart()
 removeFromCart();
 loadCartNumbs();

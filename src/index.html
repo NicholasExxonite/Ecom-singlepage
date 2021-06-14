@@ -5,13 +5,13 @@
   <script src="https://kit.fontawesome.com/2ad9e9c7b7.js" crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <link rel="stylesheet" href="ecomstyle.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 </head>
 <body>
+<div class="main-body">
   <header>
-    <div class="overlay"></div>
+    <!-- <div class="overlay"></div> -->
     <nav>
-      <h1></h1>
       <div class="navul">
         <!-- <li>Home</li>
         <li>About</li> -->
@@ -24,19 +24,11 @@
       </div>
     </nav>
   </header>
-
-  <h4>MAKE SOME MOVING TEXT ...</h4>
+  <div class="loop-container">
+    <h4 id="text-loop">PLACEHOLDERTEXT</h4>
+  </div>
   <!-- <h1>A JavaScript project</h1>
   <div id="app"></div> -->
-
-
-  <div class="shoppinglist">
-    <!-- <ul class="shoppinglist">
-
-    </ul> -->
-
-  </div>
-
   <div class="cartInfo">
 
     <div class="cart-header">
@@ -44,14 +36,78 @@
       <div class="item-price ">Item price</div>
       <div class="item-quantity">Item quantity</div>
       <div class="item-total">Total price</div>
-
     </div>
-    <div class="products">  </div>
+    <div class="cart-insides">
+      <div class="products">  </div>
+      <div class ="checkout">
+        <!-- <div id=""></div> -->
+        <!-- <input type="submit" value="Continue to checkout" class="btn"> -->
+        <h4 class="basket-total-cost" style="color: black"></h4>
+        <a id="checkout-button" href="#"> Checkout</a>
 
+      </div>
+    </div>
   </div>
 
 
-  <h4>MAKE A FUCKING FOOTER</h4>
+
+
+  <div class="shoppinglist">
+
+  </div>
+</div>
+
+
+
+
+<footer>
+  <!-- <a href="index.html" id="backtop">Back to top</a> -->
+  <div class="about-upper">
+    <div class="about">
+      <h4>About</h4>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu quam neque. Praesent accumsan erat lorem, id sollicitudin magna convallis congue. Sed suscipit lorem urna, ut viverra dui maximus at. Curabitur mollis lobortis quam in pellentesque. Duis luctus aliquam lorem non scelerisque. Pellentesque blandit dolor sed dui ultrices tristique. Cras.</p>
+    </div>
+    <div class="useful-links">
+      <h4>Site Links</h4>
+      <div>
+        <a href="index.html" class="link"> Home </a>
+        <a href="#" class="link"> Products </a>
+        <a href="#" class="link"> Directions </a>
+        <a href="#" class="link"> Blog</a>
+      </div>
+    </div>
+  </div>
+
+<div class="about-mid">
+  <div id="newsletter">
+    <h2>Subscribe to our Newsletter</h2>
+
+    <!-- <p>Lorem ipsum text about why you should subscribe to our newsletter blabla. Lorem ipsum text about why you should subscribe to our newsletter blabla.</p> -->
+    <div>
+      <input type="text" placeholder="Email address" name="mail" required>
+      <label>
+      <input type="checkbox" checked="checked" name="subscribe"> Daily Newsletter
+      </label>
+    </div>
+    <input type="submit" value="Subscribe">
+  </div>
+  <div class="socials">
+    <h5>Stay Connected</h5>
+    <div>
+      <i class="fab fa-twitter-square fa-3x"></i>
+      <i class="fab fa-facebook-square fa-3x"></i>
+      <i class="fab fa-google-plus-square fa-3x"></i>
+      <i class="fab fa-instagram-square fa-3x"></i>
+    </div>
+  </div>
+</div>
+
+  <div class="about-lower">
+    <p>Copyright @ 2021 PlaceHolder Company Inc. All rights reserved.</p>
+    <a href="#">Terms of Use</a>
+    <a href="#"> Privacy Policy</a>
+  </div>
+</footer>
 
 
   <script src="main.js"></script>
